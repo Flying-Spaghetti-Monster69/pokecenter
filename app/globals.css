@@ -12,12 +12,20 @@
   --color-light-foreground: var(--foreground);
   --color-dark-background: #0a0a0a;
   --color-dark-foreground: #ededed;
+
   --color-primary: #69ffff;
   --color-primary-gradient: rgba(163, 255, 255, 1) 89%;
   --color-secondary: #f48fb1;
+  --color-accent: #80cbc4;
+  --color-detail: #e0e0e0;
+  --color-text-secondary: #757575;
+
   --color-dark-primary: #a70000;
   --color-dark-primary-gradient: rgba(112, 16, 16, 1) 90%;
   --color-dark-secondary: #ffc107;
+  --color-dark-accent: #f44336;
+  --color-dark-detail: #424242;
+  --color-dark-text-secondary: #bdbdbd;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
