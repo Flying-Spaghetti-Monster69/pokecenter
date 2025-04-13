@@ -2,7 +2,7 @@
 const PokemonCard = ({ name }: { name: string }) => {
   return (
     <li
-      className="flex flex-col h-full w-80 bg-light-background-secondary border-2 border-primary dark:border-dark-primary dark:bg-dark-background-secondary rounded-2xl my-4 shadow-md shadow-primary/50 dark:shadow-dark-primary/50"
+      className="flex flex-col cursor-grab h-full w-80 bg-light-background-secondary border-2 border-primary dark:border-dark-primary dark:bg-dark-background-secondary rounded-2xl my-4 shadow-md shadow-primary/50 dark:shadow-dark-primary/50"
       key={name}
     >
       <div className=" flex items-center justify-between pl-4 pt-0.5">

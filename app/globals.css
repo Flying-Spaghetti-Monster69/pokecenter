@@ -9,9 +9,11 @@
 
 @theme inline {
   --color-light-background: var(--background);
+  --color-light-background-subtle: #f3ffff;
   --color-light-background-secondary: #e4ffff;
   --color-light-foreground: var(--foreground);
   --color-dark-background: #0a0a0a;
+  --color-dark-background-subtle: #121212;
   --color-dark-background-secondary: #281616;
   --color-dark-foreground: #ededed;
 
