@@ -2,8 +2,8 @@ import { DragAndDrop } from "@/components/DragAndDrop/DragAndDrop";
 
 export default function Home() {
   return (
-    <div className="h-[calc(100vh-64px)] w-full flex items-center justify-center">
+    <main className="h-min-[calc(100vh-64px)] mt-16 mb-4 w-fit flex">
       <DragAndDrop />
-    </div>
+    </main>
   );
 }
