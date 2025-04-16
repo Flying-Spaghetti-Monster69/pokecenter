@@ -15,7 +15,10 @@ const PokemonCard = ({ name }: { name: string }) => {
             </p>
           </div>
         </div>
-        <img src="/pikachu_test.png" alt="pikachu" />
+        <img
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+          alt="pikachu"
+        />
       </div>
       <div className="w-full border-t-2 border-primary dark:border-dark-primary" />
       <div className="flex items-center justify-between px-2 ">
