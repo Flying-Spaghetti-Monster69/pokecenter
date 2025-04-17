@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 type StatusEffect = {
   id: string;
@@ -43,44 +44,57 @@ const StatusEffectPicker = () => {
   return (
     <>
       <div className="flex flex-col space-y-4">
-        {/* Dropdown for selecting effects */}
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full justify-start cursor-pointer"
+                className="w-full justify-start cursor-pointer hover:bg-light-background-secondary hover:border-primary dark:hover:bg-dark-background-secondary dark:hover:border-dark-primary"
                 disabled={availableEffects.length === 0}
               >
                 {availableEffects.length > 0
-                  ? "Select status effects"
-                  : "All effects selected"}
+                  ? "Selecciona los efectos del pokemon"
+                  : "Todos los efectos seleccionados"}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full min-w-[200px]">
+            <DropdownMenuContent className="w-full min-w-[200px] bg-light-background-subtle dark:bg-dark-background-subtle border-primary dark:border-dark-primary">
               {availableEffects.map((effect) => (
                 <DropdownMenuItem
                   key={effect.id}
                   onClick={() => handleSelectEffect(effect)}
+                  className=" dark:hover:bg-dark-background-secondary cursor-pointer"
                 >
-                  {effect.name}
+                  <Image
+                    src={`/${effect.id}.png`}
+                    alt={effect.name}
+                    className="h-5 w-14 mr-2"
+                    width={56}
+                    height={20}
+                  />
+                  <p>{effect.name}</p>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
 
-        {/* Display selected effects */}
         <div className="flex flex-wrap gap-2">
           {selectedEffects.map((effect) => (
             <div
               key={effect.id}
-              className="flex items-center bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full"
+              className="flex items-center bg-light-background-secondary  dark:bg-dark-background-secondary border border-primary dark:border-dark-primary px-3 py-1 rounded-full"
             >
+              <Image
+                src={`/${effect.id}.png`}
+                alt={effect.name}
+                className="h-4 w-12 mr-2"
+                width={48}
+                height={16}
+              />
               <span className="mr-1">{effect.name}</span>
               <button
                 onClick={() => handleRemoveEffect(effect)}
-                className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                className="cursor-pointer text-primary hover:text-primary/80 dark:text-dark-primary dark:hover:text-dark-primary/80"
               >
                 <X size={16} />
               </button>
