@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/popover";
 
 import pokemons from "@/utils/pokemon.json"; // Assuming you have a JSON file with Pokemon data
+import Image from "next/image";
 
 // Mock Pokemon data - in a real app, you'd fetch this from an API
 
@@ -40,10 +41,12 @@ export function PokemonSelector() {
           >
             {selectedPokemon ? (
               <div className="flex items-center cursor-pointer">
-                <img
-                  src={selectedPokemon.imageUrl || "/placeholder.svg"}
+                <Image
+                  src={selectedPokemon.imageUrl || "/question_mark.png"}
                   alt={selectedPokemon.name}
-                  className="w-6 h-6 mr-2 rounded-full"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 mr-2 rounded-full"
                 />
                 {selectedPokemon.name}
               </div>
@@ -69,9 +72,11 @@ export function PokemonSelector() {
                     }}
                     className="flex items-center"
                   >
-                    <img
-                      src={pokemon.imageUrl || "/placeholder.svg"}
+                    <Image
+                      src={pokemon.imageUrl || "/question_mark.png"}
                       alt={pokemon.name}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 mr-2 rounded-full"
                     />
                     <span>{pokemon.name}</span>

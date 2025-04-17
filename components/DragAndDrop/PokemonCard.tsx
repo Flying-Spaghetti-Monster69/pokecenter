@@ -1,4 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
+
 const PokemonCard = ({ name }: { name: string }) => {
   return (
     <li
@@ -15,20 +16,52 @@ const PokemonCard = ({ name }: { name: string }) => {
             </p>
           </div>
         </div>
-        <img
+        <Image
           src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
           alt="pikachu"
+          width={96}
+          height={96}
         />
       </div>
       <div className="w-full border-t-2 border-primary dark:border-dark-primary" />
       <div className="flex items-center justify-between px-2 ">
         <div className="flex w-full h-fit items-center space-x-1 py-2">
-          <img src="/congelado.png" alt="congelado" className="h-5 w-14" />
-          <img src="/quemado.png" alt="quemado" className="h-5 w-14" />
-          <img src="/paralisado.png" alt="paralisado" className="h-5 w-14" />
-          <img src="/dormido.png" alt="dormido" className="h-5 w-14" />
+          <Image
+            src="/congelado.png"
+            alt="congelado"
+            className="h-5 w-14"
+            height={20}
+            width={56}
+          />
+          <Image
+            src="/quemado.png"
+            alt="quemado"
+            className="h-5 w-14"
+            height={20}
+            width={56}
+          />
+          <Image
+            src="/paralisado.png"
+            alt="paralisado"
+            className="h-5 w-14"
+            height={20}
+            width={56}
+          />
+          <Image
+            src="/dormido.png"
+            alt="dormido"
+            className="h-5 w-14"
+            height={20}
+            width={56}
+          />
 
-          <img src="/envenenado.png" alt="envenenado" className="h-5 w-14" />
+          <Image
+            src="/envenenado.png"
+            alt="envenenado"
+            className="h-5 w-14"
+            height={20}
+            width={56}
+          />
         </div>
       </div>
     </li>
