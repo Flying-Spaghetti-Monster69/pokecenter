@@ -4,6 +4,9 @@ import { Plus, Trash2 } from "lucide-react";
 import StatusEffectPicker from "@/components/forms/StatusEffectPicker";
 import PokemonSelector from "@/components/forms/pokemonSelector";
 
+const inputStyles =
+  "w-full p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
+
 interface FormEntry {
   id: number;
   currentPV: number;
@@ -52,23 +55,15 @@ const AppointmentsRegister = () => {
     setEntries(newEntries);
   }; */
 
-  /* const removeEntry = (index: number) => {
-    console.log("Removing entry at index:", index);
-    const newEntries = [...entries];
-    console.log("New entries before removal:", newEntries);
-    console.log("3:", newEntries[0]);
-    const deleted = newEntries.splice(index, 1);
-    console.log("New entries after removal:", newEntries);
-    console.log("Deleted entry:", deleted);
-    setEntries(newEntries);
-  }; */
-
   const removeEntry = (id: number) => {
     setEntries(entries.filter((entry) => entry.id !== id));
   };
 
   return (
     <div className="container mx-auto px-4 mt-16 py-8">
+      <h1 className="text-center text-3xl font-semibold mb-6">
+        Registra tus pokemones que quieres que sean atendidos
+      </h1>
       <form className="space-y-6">
         {entries.map((entry, index) => (
           <div
@@ -93,10 +88,7 @@ const AppointmentsRegister = () => {
                 <label className="block text-sm font-medium">
                   Nombre del Pokemon
                 </label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded-md dark:bg-dark-background"
-                />
+                <input type="text" className={inputStyles} />
               </div>
 
               <div className="space-y-2">
@@ -105,7 +97,7 @@ const AppointmentsRegister = () => {
                   type="number"
                   min="0"
                   name="current_PV"
-                  className="w-full p-2 border rounded-md dark:bg-dark-background"
+                  className={inputStyles}
                 />
               </div>
               <div className="space-y-2">
@@ -114,7 +106,7 @@ const AppointmentsRegister = () => {
                   type="number"
                   min="1"
                   name="PV"
-                  className="w-full p-2 border rounded-md dark:bg-dark-background"
+                  className={inputStyles}
                 />
               </div>
               <div className="space-y-2">
@@ -123,7 +115,7 @@ const AppointmentsRegister = () => {
                   type="number"
                   min="1"
                   max="100"
-                  className="w-full p-2 border rounded-md dark:bg-dark-background"
+                  className={inputStyles}
                 />
               </div>
 
@@ -148,7 +140,7 @@ const AppointmentsRegister = () => {
           <button
             type="button"
             onClick={addEntry}
-            className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/80 dark:bg-dark-primary dark:hover:bg-dark-primary/80"
+            className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-md hover:bg-accent/80 dark:bg-dark-primary dark:hover:bg-dark-primary/80"
           >
             <Plus className="h-5 w-5" />
             Añadir Pokemon
@@ -158,7 +150,7 @@ const AppointmentsRegister = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="px-6 py-2 bg-secondary text-white rounded-md hover:bg-secondary/80 dark:bg-dark-secondary dark:hover:bg-dark-secondary/80"
+            className="cursor-pointer px-6 py-2 bg-secondary text-white rounded-md hover:bg-secondary/80 dark:bg-dark-secondary dark:hover:bg-dark-secondary/80"
           >
             Enviar
           </button>

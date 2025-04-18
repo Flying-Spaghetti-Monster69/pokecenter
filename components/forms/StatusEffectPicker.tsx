@@ -82,7 +82,7 @@ const StatusEffectPicker = () => {
           {selectedEffects.map((effect) => (
             <div
               key={effect.id}
-              className="flex items-center bg-light-background-secondary  dark:bg-dark-background-secondary border border-primary dark:border-dark-primary px-3 py-1 rounded-full"
+              className="flex items-center bg-light-background-subtle  dark:bg-dark-background-secondary border border-primary dark:border-dark-primary px-3 py-1 rounded-full"
             >
               <Image
                 src={`/${effect.id}.png`}
@@ -94,7 +94,7 @@ const StatusEffectPicker = () => {
               <span className="mr-1">{effect.name}</span>
               <button
                 onClick={() => handleRemoveEffect(effect)}
-                className="cursor-pointer text-primary hover:text-primary/80 dark:text-dark-primary dark:hover:text-dark-primary/80"
+                className="cursor-pointer text-accent hover:text-primary/80 dark:text-dark-primary dark:hover:text-dark-primary/80"
               >
                 <X size={16} />
               </button>
