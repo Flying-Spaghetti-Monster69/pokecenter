@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
-import PokemonSelector from "@/components/forms/PokemonSelector";
 import StatusEffectPicker from "@/components/forms/StatusEffectPicker";
 
 const inputStyles =
@@ -123,7 +122,6 @@ const AppointmentsRegister = () => {
                 <label className="block text-sm font-medium">
                   Especie del Pokemon
                 </label>
-                <PokemonSelector />
               </div>
 
               <div className="space-y-2">
