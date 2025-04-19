@@ -23,14 +23,16 @@ export async function middleware(request: NextRequest) {
     session.user.role !== "user" &&
     request.nextUrl.pathname.startsWith("/entrenador")
   ) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(new URL("/enfermera/citas", request.url));
   }
 
   if (
     session.user.role !== "admin" &&
     request.nextUrl.pathname.startsWith("/enfermera")
   ) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(
+      new URL("/entrenador/registro-citas", request.url)
+    );
   }
 
   return NextResponse.next();

@@ -12,7 +12,7 @@ export const signInSchema = z.object({
     .max(12, { message: "Nombre debe ser menor a 12 caracteres" }),
 });
 
-export const signUpSchema = z.object({
+export const logInSchema = z.object({
   email: z.string().email({ message: "Email inválido" }),
   password: z
     .string()

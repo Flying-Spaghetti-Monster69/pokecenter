@@ -54,7 +54,6 @@ const SignInForm = () => {
       email: values.email,
       password: values.password,
       name: values.name,
-      callbackURL: "/entrenador/registro-citas",
     });
 
     setIsLoading(false);
@@ -80,7 +79,7 @@ const SignInForm = () => {
                   <input
                     className={inputStyles}
                     id="name"
-                    placeholder="Ash Ketchum"
+                    placeholder="Ash Ketchup"
                     {...field}
                     required
                   />
