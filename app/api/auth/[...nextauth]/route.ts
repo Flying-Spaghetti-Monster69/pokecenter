@@ -4,7 +4,7 @@ import prisma from "@/utils/db";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
-export default NextAuth({
+export const { auth, handlers } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHub({
@@ -17,6 +17,7 @@ export default NextAuth({
     }),
   ],
   callbacks: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async session({ session, user }: { session: any; user: any }) {
       session.user.role = user.role;
       return session;
