@@ -14,10 +14,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "../navbar/ThemeToggle";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const inputStyles =
   "w-full p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
@@ -40,7 +40,7 @@ const SignIn = () => {
             Sign in
           </CardTitle>
           <CardDescription className="text-center">
-            Choose your preferred sign in method
+            Escoge tu metodo de registro preferido
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -108,7 +108,7 @@ const SignIn = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Contraseña</Label>
               <input
                 className={inputStyles}
                 id="password"
@@ -136,7 +136,7 @@ const SignIn = () => {
               type="submit"
               className="w-full bg-accent cursor-pointer hover:bg-accent/90 dark:bg-dark-primary dark:hover:bg-dark-primary/90 dark:text-dark-foreground"
             >
-              Register
+              registrate
             </Button>
           </form>
         </CardContent>
@@ -144,7 +144,7 @@ const SignIn = () => {
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link
-              href="/login"
+              href="/auth/login"
               className="text-accent underline underline-offset-4 hover:text-accent/90 dark:text-dark-primary dark:hover:text-dark-primary/90"
             >
               Log in

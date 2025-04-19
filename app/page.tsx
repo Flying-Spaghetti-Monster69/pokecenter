@@ -1,9 +1,10 @@
-import SignIn from "@/components/Auth/SignIn";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div>
-      <SignIn />
+      <Link href="/auth/login">login</Link>
+      <Link href="/auth/registro">registro</Link>
     </div>
   );
 }
