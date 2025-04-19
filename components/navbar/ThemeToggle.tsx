@@ -4,7 +4,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-export function ThemeToggle() {
+export function ThemeToggle({ classNames }: { classNames?: string }) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -19,7 +19,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-md cursor-pointer bg-light-background dark:bg-dark-background border-2 border-primary dark:border-dark-primary"
+      className={`p-2 rounded-md cursor-pointer bg-light-background dark:bg-dark-background border-2 border-primary dark:border-dark-primary ${classNames}`}
     >
       {theme === "dark" ? "☀️" : "🌙"}
     </button>

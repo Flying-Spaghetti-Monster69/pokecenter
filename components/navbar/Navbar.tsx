@@ -14,13 +14,13 @@ const Navbar = () => {
       </Link>
       <div className="flex items-center justify-center h-full w-fit space-x-4">
         <Link
-          href={"/citas"}
+          href={"/enfermera/citas"}
           className="p-2 rounded-xl bg-light-background-subtle hover:border-primary border-2 border-transparent dark:hover:border-dark-primary dark:bg-dark-background-subtle"
         >
           Citas
         </Link>
         <Link
-          href={"/registro-citas"}
+          href={"/entrenador/registro-citas"}
           className="p-2 rounded-xl bg-light-background-subtle hover:border-primary border-2 border-transparent dark:hover:border-dark-primary dark:bg-dark-background-subtle"
         >
           Registro
