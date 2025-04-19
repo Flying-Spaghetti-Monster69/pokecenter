@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
-import StatusEffectPicker from "@/components/forms/StatusEffectPicker";
 import PokemonSelector from "@/components/forms/PokemonSelector";
+import StatusEffectPicker from "@/components/forms/StatusEffectPicker";
 
 const inputStyles =
   "w-full p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";

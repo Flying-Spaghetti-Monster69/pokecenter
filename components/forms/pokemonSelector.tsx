@@ -18,10 +18,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import pokemons from "@/utils/pokemon.json"; // Assuming you have a JSON file with Pokemon data
+import pokemons from "@/utils/pokemon.json";
 import Image from "next/image";
-
-// Mock Pokemon data - in a real app, you'd fetch this from an API
 
 export function PokemonSelector() {
   const [open, setOpen] = React.useState(false);
