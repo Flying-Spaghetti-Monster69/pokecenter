@@ -69,7 +69,9 @@ const Login = () => {
 
           <div className="flex items-center">
             <Separator className="flex-1" />
-            <span className="px-3 text-sm text-muted-foreground">OR</span>
+            <span className="px-3 text-sm text-muted-foreground">
+              Enfermeras
+            </span>
             <Separator className="flex-1" />
           </div>
 

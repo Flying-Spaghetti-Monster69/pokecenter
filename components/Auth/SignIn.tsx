@@ -80,7 +80,9 @@ const SignIn = () => {
 
           <div className="flex items-center">
             <Separator className="flex-1" />
-            <span className="px-3 text-sm text-muted-foreground">OR</span>
+            <span className="px-3 text-sm text-muted-foreground">
+              Enfermeras
+            </span>
             <Separator className="flex-1" />
           </div>
 
@@ -128,7 +130,7 @@ const SignIn = () => {
                 htmlFor="nurse"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
               >
-                I am a nurse
+                Soy una enfermera
               </Label>
             </div>
 
