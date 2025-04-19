@@ -1,7 +1,9 @@
 // prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -16,12 +18,6 @@ enum status {
   dormido
 }
 
-enum roles {
-  enfermera
-  entrenador
-  admin
-}
-
 model Cita {
   id         Int      @id @default(autoincrement())
   current_PV Int
@@ -33,8 +29,8 @@ model Cita {
   name       String
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -48,7 +44,11 @@ model User {
   sessions      Session[]
   accounts      Account[]
   citas         Cita[]
-  role          roles     @default(entrenador)
+  role          String     @default("user")
+
+  banned     Boolean?
+  banReason  String?
+  banExpires DateTime?
 
   @@unique([email])
   @@map("user")
@@ -64,6 +64,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
 
   @@unique([token])
   @@map("session")
