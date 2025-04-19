@@ -21,7 +21,7 @@ import {
 import pokemons from "@/utils/pokemon.json";
 import Image from "next/image";
 
-export function PokemonSelector() {
+export function PokemonSpecieSelector() {
   const [open, setOpen] = React.useState(false);
   const [selectedPokemon, setSelectedPokemon] = React.useState<
     (typeof pokemons)[0] | null
@@ -99,4 +99,4 @@ export function PokemonSelector() {
   );
 }
 
-export default PokemonSelector;
+export default PokemonSpecieSelector;
