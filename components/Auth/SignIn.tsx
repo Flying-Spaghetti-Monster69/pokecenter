@@ -2,7 +2,6 @@
 
 import type React from "react";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,24 +13,145 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "../navbar/ThemeToggle";
-import { Checkbox } from "@/components/ui/checkbox";
 import { authClient } from "@/utils/auth-client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInSchema } from "@/utils/schemas";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { LoaderCircle } from "lucide-react";
 
 const inputStyles =
   "w-full p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
 
+const SignInForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof signInSchema>) {
+    setIsLoading(true);
+    const { error } = await authClient.signUp.email({
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      callbackURL: "/entrenador/registro-citas",
+    });
+
+    setIsLoading(false);
+    if (!error) {
+      toast.success("Usuario creado correctamente");
+      return router.push("/entrenador/registro-citas");
+    } else {
+      toast.error(error.message ? error.message : "Error al crear usuario");
+    }
+  }
+
+  return (
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormLabel>Nombre</FormLabel>
+                <FormControl>
+                  <input
+                    className={inputStyles}
+                    id="name"
+                    placeholder="Ash Ketchum"
+                    {...field}
+                    required
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <input
+                    className={inputStyles}
+                    id="email"
+                    placeholder="pokeballs69@gmail.com"
+                    {...field}
+                    required
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="mb-6">
+                <FormLabel>Contraseña</FormLabel>
+                <FormControl>
+                  <input
+                    className={inputStyles}
+                    id="password"
+                    placeholder="Pikachu123"
+                    {...field}
+                    required
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-accent cursor-pointer hover:bg-accent/90 dark:bg-dark-primary dark:hover:bg-dark-primary/90 dark:text-dark-foreground"
+          >
+            {isLoading ? (
+              <>
+                <LoaderCircle className=" animate-spin" />
+                <span className="ml-2">Cargando...</span>
+              </>
+            ) : (
+              "Registrarse"
+            )}
+          </Button>
+        </form>
+      </Form>
+    </>
+  );
+};
+
 const SignIn = () => {
-  const [isNurse, setIsNurse] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted", { isNurse });
-  };
-
   return (
     <div className="flex justify-center items-center min-h-screen p-4">
       <ThemeToggle classNames="absolute top-4 right-4" />
@@ -51,7 +171,7 @@ const SignIn = () => {
               onClick={async () => {
                 await authClient.signIn.social({
                   provider: "google",
-                  callbackURL: "/enfermera/citas",
+                  callbackURL: "/entrenador/citas",
                 });
               }}
               variant="outline"
@@ -86,7 +206,7 @@ const SignIn = () => {
               onClick={async () => {
                 await authClient.signIn.social({
                   provider: "github",
-                  callbackURL: "/enfermera/citas",
+                  callbackURL: "/entrenador/citas",
                 });
               }}
               variant="outline"
@@ -100,70 +220,17 @@ const SignIn = () => {
           <div className="flex items-center">
             <Separator className="flex-1" />
             <span className="px-3 text-sm text-muted-foreground">
-              Enfermeras
+              O mediante email
             </span>
             <Separator className="flex-1" />
           </div>
 
           {/* Registration Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <input
-                className={inputStyles}
-                id="name"
-                placeholder="Enter your name"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <input
-                className={inputStyles}
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <input
-                className={inputStyles}
-                id="password"
-                type="password"
-                required
-              />
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="nurse"
-                checked={isNurse}
-                onCheckedChange={(checked) => setIsNurse(checked as boolean)}
-                className="cursor-pointer"
-              />
-              <Label
-                htmlFor="nurse"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
-              >
-                Soy una enfermera
-              </Label>
-            </div>
-
-            <Button
-              type="submit"
-              className="w-full bg-accent cursor-pointer hover:bg-accent/90 dark:bg-dark-primary dark:hover:bg-dark-primary/90 dark:text-dark-foreground"
-            >
-              registrate
-            </Button>
-          </form>
+          <SignInForm />
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
-            Already have an account?{" "}
+            Ya tienes una cuenta?{" "}
             <Link
               href="/auth/login"
               className="text-accent underline underline-offset-4 hover:text-accent/90 dark:text-dark-primary dark:hover:text-dark-primary/90"
