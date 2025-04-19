@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
-import PokemonSelector from "@/components/forms/PokemonSelector";
+import PokemonSelector from "@/components/forms/PokemonSpecieSelector";
 import StatusEffectPicker from "@/components/forms/StatusEffectPicker";
 
 const inputStyles =
