@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "../navbar/ThemeToggle";
 import { Checkbox } from "@/components/ui/checkbox";
+import { authClient } from "@/utils/auth-client";
 
 const inputStyles =
   "w-full p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
@@ -46,7 +47,16 @@ const SignIn = () => {
         <CardContent className="space-y-4">
           {/* Social Login Options */}
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="outline" className="w-full">
+            <Button
+              onClick={async () => {
+                await authClient.signIn.social({
+                  provider: "google",
+                  callbackURL: "/enfermera/citas",
+                });
+              }}
+              variant="outline"
+              className="w-full"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -72,7 +82,16 @@ const SignIn = () => {
               </svg>
               Google
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button
+              onClick={async () => {
+                await authClient.signIn.social({
+                  provider: "github",
+                  callbackURL: "/enfermera/citas",
+                });
+              }}
+              variant="outline"
+              className="w-full"
+            >
               <Github className="w-5 h-5 mr-2" />
               GitHub
             </Button>

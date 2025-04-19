@@ -1,7 +1,10 @@
 // prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
 datasource db {
   provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -14,80 +17,84 @@ enum status {
 }
 
 enum roles {
-  indefinido
   enfermera
   entrenador
   admin
 }
 
-
 model Cita {
-  id          Int          @id @default(autoincrement())
-  current_PV Int 
-  PV Int
-  statuses    status[]
-  level       Int
-  pokedex_ID   Int
-  species  String
-  name  String
+  id         Int      @id @default(autoincrement())
+  current_PV Int
+  PV         Int
+  statuses   status[]
+  level      Int
+  pokedex_ID Int
+  species    String
+  name       String
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
-  userId      String
-  user        User @relation(fields: [userId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
   image         String?
-  role          roles     @default(indefinido)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
+  createdAt     DateTime
+  updatedAt     DateTime
   sessions      Session[]
-  citas       Cita[]
-}
+  accounts      Account[]
+  citas         Cita[]
+  role          roles     @default(entrenador)
 
-// This model is used for OAuth accounts and sessions. Is just a default model from NextAuth.js and Prisma. do not change it.
-// https://next-auth.js.org/adapters/prisma
-// https://www.prisma.io/docs/concepts/components/prisma-schema/data-model#model
-
-model Account {
-  id                 String    @id @default(cuid())
-  userId             String
-  providerType       String
-  providerId         String
-  providerAccountId  String
-  refreshToken       String?
-  accessToken        String?
-  accessTokenExpires DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  user               User      @relation(fields: [userId], references: [id])
-
-  @@unique([providerId, providerAccountId])
+  @@unique([email])
+  @@map("user")
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  userId       String
-  expires      DateTime
-  sessionToken String   @unique
-  accessToken  String   @unique
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [id])
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
 }
 
-model VerificationRequest {
-  id         String   @id @default(cuid())
-  identifier String
-  token      String   @unique
-  expires    DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
 
-  @@unique([identifier, token])
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
 }
