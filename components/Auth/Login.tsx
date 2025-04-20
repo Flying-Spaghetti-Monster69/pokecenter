@@ -28,7 +28,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
@@ -36,7 +35,6 @@ import { buttonStyles, inputStyles } from "@/utils/consts";
 
 const LogInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const form = useForm<z.infer<typeof logInSchema>>({
     resolver: zodResolver(logInSchema),
     defaultValues: {
@@ -47,18 +45,22 @@ const LogInForm = () => {
 
   async function onSubmit(values: z.infer<typeof logInSchema>) {
     setIsLoading(true);
-    const { error } = await authClient.signIn.email({
+    await authClient.signIn.email({
       email: values.email,
       password: values.password,
+      callbackURL: "/entrenador/registro-citas",
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("Bienvenido de nuevo!");
+          setIsLoading(false);
+        },
+        onError: (error) => {
+          toast.error(error.error.message);
+          setIsLoading(false);
+        },
+      },
     });
-
-    setIsLoading(false);
-    if (!error) {
-      toast.success("Bienvenido de nuevo!");
-      return router.push("/entrenador/registro-citas");
-    } else {
-      toast.error(error.message ? error.message : "Error al iniciar sesion");
-    }
+    toast.info("I still ran!");
   }
 
   return (
