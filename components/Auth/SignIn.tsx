@@ -32,9 +32,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
-
-const inputStyles =
-  "w-full p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
+import { buttonStyles, inputStyles } from "@/utils/consts";
 
 const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -174,7 +172,7 @@ const SignIn = () => {
                 });
               }}
               variant="outline"
-              className="w-full"
+              className={`w-full ${buttonStyles}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +207,7 @@ const SignIn = () => {
                 });
               }}
               variant="outline"
-              className="w-full"
+              className={`w-full ${buttonStyles}`}
             >
               <Github className="w-5 h-5 mr-2" />
               GitHub

@@ -3,6 +3,12 @@ interface Route {
   route: string;
 }
 
+export const buttonStyles =
+  "hover:bg-light-background-secondary hover:border-primary dark:hover:bg-dark-background-secondary dark:hover:border-dark-primary cursor-pointer";
+
+export const inputStyles =
+  "w-full p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
+
 export const entrenadorRoutes: Route[] = [
   {
     name: "Registro de Citas",
