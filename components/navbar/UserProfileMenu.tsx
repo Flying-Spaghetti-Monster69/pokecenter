@@ -28,7 +28,7 @@ export function UserProfileMenu() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  if (isPending) {
+  if (isPending || !session?.user) {
     return (
       <div className="relative h-fit w-fit max-h-11 flex items-center gap-2 p-3 rounded-md bg-light-background border-primary dark:border-dark-primary border-2 cursor-pointer hover:bg-light-background-subtle dark:bg-dark-background dark:hover:bg-dark-background-subtle">
         <LoaderCircle className="h-4 w-4 animate-spin" />
@@ -61,12 +61,10 @@ export function UserProfileMenu() {
           {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           <Avatar className="h-8 w-8">
             <AvatarImage
-              src={session?.user.image as string}
-              alt={session?.user.name}
+              src={session.user.image || ""}
+              alt={session.user.name}
             />
-            <AvatarFallback>
-              {getInitials(session?.user.name as string)}
-            </AvatarFallback>
+            <AvatarFallback>{getInitials(session.user.name)}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -74,19 +72,19 @@ export function UserProfileMenu() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1.5">
             <p className="text-sm font-medium leading-none">
-              {session?.user.name}
+              {session.user.name}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {session?.user.email}
+              {session.user.email}
             </p>
             <p className="text-xs leading-none text-accent dark:text-dark-accent">
-              {session?.user.role === "admin" ? "Enfermera" : "Entrenador"}
+              {session.user.role === "admin" ? "Enfermera" : "Entrenador"}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {session?.user.role === "admin"
+          {session.user.role === "admin"
             ? enfermeraRoutes.map((route) => {
                 return (
                   <Link key={route.name} href={route.route}>
