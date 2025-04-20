@@ -19,8 +19,8 @@ export const entrenadorRoutes: Route[] = [
 
 export const enfermeraRoutes: Route[] = [
   {
-    name: "Citas",
+    name: "Flujo de Citas",
     route: "/enfermera/citas",
   },
-  { name: "Admin", route: "/enfermera/Admin" },
+  { name: "Admin", route: "/enfermera/admin" },
 ];
