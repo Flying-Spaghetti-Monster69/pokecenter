@@ -60,7 +60,6 @@ const LogInForm = () => {
         },
       },
     });
-    toast.info("I still ran!");
   }
 
   return (
