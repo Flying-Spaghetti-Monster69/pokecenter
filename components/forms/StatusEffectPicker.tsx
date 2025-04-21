@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,13 +10,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { useFormContext } from "react-hook-form";
 
 type StatusEffect = {
   id: string;
   name: string;
 };
 
-const StatusEffectPicker = () => {
+interface StatusEffectPickerProps {
+  index: number;
+}
+
+const StatusEffectPicker = ({ index }: StatusEffectPickerProps) => {
   const initialStatusEffects: StatusEffect[] = [
     { id: "envenenado", name: "Envenenado" },
     { id: "quemado", name: "Quemado" },
@@ -25,9 +30,16 @@ const StatusEffectPicker = () => {
     { id: "dormido", name: "Dormido" },
   ];
 
+  const { setValue } = useFormContext();
+
   const [availableEffects, setAvailableEffects] =
     useState<StatusEffect[]>(initialStatusEffects);
   const [selectedEffects, setSelectedEffects] = useState<StatusEffect[]>([]);
+
+  useEffect(() => {
+    const selectedEffectIds = selectedEffects.map((effect) => effect.id);
+    setValue(`pokemons.${index}.statuses`, selectedEffectIds);
+  }, [selectedEffects, setValue, index]);
 
   const handleSelectEffect = (effect: StatusEffect) => {
     setSelectedEffects([...selectedEffects, effect]);
@@ -61,7 +73,9 @@ const StatusEffectPicker = () => {
               {availableEffects.map((effect) => (
                 <DropdownMenuItem
                   key={effect.id}
-                  onClick={() => handleSelectEffect(effect)}
+                  onClick={() => {
+                    handleSelectEffect(effect);
+                  }}
                   className=" dark:hover:bg-dark-background-secondary cursor-pointer"
                 >
                   <Image
@@ -93,7 +107,9 @@ const StatusEffectPicker = () => {
               />
               <span className="mr-1">{effect.name}</span>
               <button
-                onClick={() => handleRemoveEffect(effect)}
+                onClick={() => {
+                  handleRemoveEffect(effect);
+                }}
                 className="cursor-pointer text-accent hover:text-primary/80 dark:text-dark-primary dark:hover:text-dark-primary/80"
               >
                 <X size={16} />
