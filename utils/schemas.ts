@@ -20,23 +20,35 @@ export const logInSchema = z.object({
     .max(32, { message: "Contraseña debe ser menor a 32 caracteres" }),
 });
 
-export const citaSchema = z
-  .object({
-    id: z.number(),
-    name: z
-      .string()
-      .min(1, { message: "Nombre debe ser de 1 a 12 caracteres" })
-      .max(12, { message: "Nombre debe ser de 1 a 12 caracteres" }),
-    PV: z.number().min(1, { message: "PV máximo debe ser mayor a 0" }),
-    currentPV: z
-      .number()
-      .min(0, { message: "PV actual debe ser mayor o igual a 0" }),
-    level: z.number().min(1, { message: "Nivel debe ser mayor a 0" }).max(100, {
-      message: "Nivel debe ser menor a 100",
-    }),
-    species: z.string().nonempty({ message: "Especie es requerida" }),
-    statuses: z.array(z.string()).optional(),
-    pokedexNumber: z.number(),
-    trainerId: z.string(),
-  })
-  .array();
+export const citaFormSchema = z.object({
+  pokemons: z
+    .object({
+      name: z
+        .string()
+        .min(1, { message: "Nombre debe ser de 1 a 12 caracteres" })
+        .max(12, { message: "Nombre debe ser de 1 a 12 caracteres" }),
+      PV: z
+        .number()
+        .min(1, { message: "numero tiene que ser mayor a 1" })
+        .int({ message: "numero tiene que ser un entero" }),
+      current_PV: z
+        .number()
+        .min(0, { message: "numero tiene que ser mayor a 1" })
+        .int({ message: "numero tiene que ser un entero" }),
+      level: z
+        .number()
+        .min(1, { message: "numero tiene que ser mayor a 1" })
+        .max(100, { message: "numero tiene que ser menor a 100" })
+        .int({ message: "numero tiene que ser un entero" }),
+      species: z.string().nonempty({ message: "Especie es requerida" }),
+      statuses: z.array(z.string()).optional(),
+      pokedex_ID: z.number().int().positive(),
+    })
+    .refine(
+      (data) => {
+        return data.PV > data.current_PV;
+      },
+      { message: "PV actual debe ser menor a PV máximo" }
+    )
+    .array(),
+});
