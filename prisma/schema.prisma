@@ -18,7 +18,7 @@ enum status {
   dormido
 }
 
-model Cita {
+model cita {
   id         Int      @id @default(autoincrement())
   current_PV Int
   PV         Int
@@ -30,6 +30,7 @@ model Cita {
   created_At DateTime @default(now())
   updated_At DateTime @updatedAt
   userId     String
+  state_cita String @default("espera")
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -43,7 +44,7 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
-  citas         Cita[]
+  citas         cita[]
   role          String     @default("user")
 
   banned     Boolean?
