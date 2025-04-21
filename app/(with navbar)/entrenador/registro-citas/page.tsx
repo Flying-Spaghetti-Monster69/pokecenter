@@ -1,5 +1,5 @@
 "use client";
-import { Plus, Trash2 } from "lucide-react";
+import { LoaderCircle, Plus, Trash2 } from "lucide-react";
 import PokemonSelector from "@/components/forms/PokemonSpecieSelector";
 import StatusEffectPicker from "@/components/forms/StatusEffectPicker";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -15,11 +15,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "react-toastify";
+import { authClient } from "@/utils/auth-client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const inputStyles =
   "w-full h-[42px] p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
 
 const AppointmentsRegister = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof citaFormSchema>>({
     resolver: zodResolver(citaFormSchema),
     defaultValues: {
@@ -41,6 +45,51 @@ const AppointmentsRegister = () => {
     name: "pokemons",
   });
 
+  const onSubmit = async (data: z.infer<typeof citaFormSchema>) => {
+    setIsLoading(true);
+    const { data: session, error } = await authClient.getSession();
+    if (error) {
+      toast.error(
+        "Error al obtener la sesión del usuario, por favor vuelve a iniciar sesión"
+      );
+      setIsLoading(false);
+
+      return;
+    }
+    if (!session) {
+      toast.error(
+        "No se ha encontrado la sesión del usuario, por favor vuelve a iniciar sesión"
+      );
+      setIsLoading(false);
+      return;
+    }
+    const userId = session.user.id;
+    const citas = { ...data, userId: userId };
+    try {
+      const response = await fetch("/api/citas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(citas),
+      });
+
+      setIsLoading(false);
+
+      if (!response.ok) {
+        toast.error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        console.error("Error data:", errorData);
+        return;
+      }
+
+      toast.success("Cita registrada correctamente");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(`There was an error sending the data: ${error}`);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 mt-16 py-8">
       <h1 className="text-center text-3xl font-semibold mb-6">
@@ -48,13 +97,7 @@ const AppointmentsRegister = () => {
       </h1>
 
       <Form {...form}>
-        <form
-          className="space-y-6"
-          onSubmit={form.handleSubmit((data) => {
-            console.log("hello");
-            console.log(data);
-          })}
-        >
+        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           {fields.map((entry, index) => (
             <div
               key={entry.id}
@@ -217,16 +260,24 @@ const AppointmentsRegister = () => {
           </div>
 
           <div className="flex justify-center">
-            <button
+            <Button
               type="submit"
+              disabled={isLoading}
               onClick={() =>
                 form.formState?.errors?.pokemons?.length &&
                 toast.error("Hay errores en el formulario")
               }
-              className="cursor-pointer px-6 py-2 bg-secondary text-white rounded-md hover:bg-secondary/80 dark:bg-dark-secondary dark:hover:bg-dark-secondary/80"
+              className="cursor-pointer w-fit px-6 py-2 bg-secondary text-white rounded-md hover:bg-secondary/80 dark:bg-dark-secondary dark:hover:bg-dark-secondary/80"
             >
-              Enviar
-            </button>
+              {isLoading ? (
+                <div className="flex items-center">
+                  <LoaderCircle className=" animate-spin" />
+                  <span className="ml-2">Cargando...</span>
+                </div>
+              ) : (
+                "Enviar"
+              )}
+            </Button>
           </div>
         </form>
       </Form>
