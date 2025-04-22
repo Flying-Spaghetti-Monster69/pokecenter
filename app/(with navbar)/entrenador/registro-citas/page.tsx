@@ -97,7 +97,12 @@ const AppointmentsRegister = () => {
       </h1>
 
       <Form {...form}>
-        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="space-y-6"
+          onSubmit={form.handleSubmit(onSubmit, () =>
+            toast.error(`hay errores en el formulario`)
+          )}
+        >
           {fields.map((entry, index) => (
             <div
               key={entry.id}
@@ -263,10 +268,6 @@ const AppointmentsRegister = () => {
             <Button
               type="submit"
               disabled={isLoading}
-              onClick={() =>
-                form.formState?.errors?.pokemons?.length &&
-                toast.error("Hay errores en el formulario")
-              }
               className="cursor-pointer w-fit px-6 py-2 bg-secondary text-white rounded-md hover:bg-secondary/80 dark:bg-dark-secondary dark:hover:bg-dark-secondary/80"
             >
               {isLoading ? (
