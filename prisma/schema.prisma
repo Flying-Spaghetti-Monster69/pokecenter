@@ -10,19 +10,11 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum status {
-  envenenado
-  quemado
-  congelado
-  paralisado
-  dormido
-}
-
 model cita {
   id         Int      @id @default(autoincrement())
   current_PV Int
   PV         Int
-  statuses   status[]
+  statuses   String[]
   level      Int
   pokedex_ID Int
   species    String
