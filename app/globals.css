@@ -4,6 +4,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
+  --breakpoint-smg: 680px;
+  --breakpoint-mdg: 1000px;
+  --breakpoint-lgg: 1320px;
+
   --color-light-background: var(--background);
   --color-light-background-subtle: #f3ffff;
   --color-light-background-secondary: #e4ffff;
