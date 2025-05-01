@@ -14,18 +14,6 @@ const Navbar = () => {
         <h1 className="text-black dark:text-white font-bold">Pokecenter</h1>
       </Link>
       <div className="flex items-center justify-center h-full w-fit space-x-4">
-        {/* <Link
-          href={"/enfermera/citas"}
-          className="p-2 rounded-xl bg-light-background-subtle hover:border-primary border-2 border-transparent dark:hover:border-dark-primary dark:bg-dark-background-subtle"
-        >
-          Citas
-        </Link>
-        <Link
-          href={"/entrenador/registro-citas"}
-          className="p-2 rounded-xl bg-light-background-subtle hover:border-primary border-2 border-transparent dark:hover:border-dark-primary dark:bg-dark-background-subtle"
-        >
-          Registro
-        </Link> */}
         <UserProfileMenu />
         <ThemeToggle />
       </div>
