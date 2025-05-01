@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { authClient } from "@/utils/auth-client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { registerPokemons } from "@/utils/actions";
 
 const inputStyles =
   "w-full h-[42px] p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
@@ -66,24 +67,10 @@ const AppointmentsRegister = () => {
     const userId = session.user.id;
     const citas = { ...data, userId: userId };
     try {
-      const response = await fetch("/api/citas", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(citas),
-      });
-
-      setIsLoading(false);
-
-      if (!response.ok) {
-        toast.error(`HTTP error! status: ${response.status}`);
-        const errorData = await response.json();
-        console.error("Error data:", errorData);
-        return;
-      }
-
+      await registerPokemons(citas, userId);
       toast.success("Cita registrada correctamente");
+      setIsLoading(false);
+      form.reset();
     } catch (error) {
       setIsLoading(false);
       toast.error(`There was an error sending the data: ${error}`);
