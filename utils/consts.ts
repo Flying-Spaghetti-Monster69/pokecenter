@@ -20,8 +20,8 @@ export interface cita {
   pokedex_ID: number;
   species: string;
   name: string;
-  created_At: string;
-  updated_At: string;
+  created_At: Date;
+  updated_At: Date;
   userId: string;
   state_cita: string;
 }

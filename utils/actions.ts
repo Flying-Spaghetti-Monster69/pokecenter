@@ -37,3 +37,30 @@ export const getUserWaitingPokemons = async (userId: string) => {
     console.error("Error processing request:", error);
   }
 };
+
+export const getNotDonePokemons = async () => {
+  try {
+    const appointments = await prisma.cita.findMany({
+      where: {
+        NOT: { state_cita: "curado" },
+      },
+    });
+
+    const waiting = appointments.filter(
+      (appointment) => appointment.state_cita === "espera"
+    );
+    const sala1 = appointments.filter(
+      (appointment) => appointment.state_cita === "sala1"
+    );
+    const sala2 = appointments.filter(
+      (appointment) => appointment.state_cita === "sala2"
+    );
+    const sala3 = appointments.filter(
+      (appointment) => appointment.state_cita === "sala3"
+    );
+
+    return { waiting, sala1, sala2, sala3 };
+  } catch (error) {
+    console.error("Error processing request:", error);
+  }
+};
