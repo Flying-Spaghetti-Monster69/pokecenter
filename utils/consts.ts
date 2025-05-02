@@ -3,6 +3,19 @@ interface Route {
   route: string;
 }
 
+export interface user {
+  id: string;
+  name: string;
+  email: string;
+  image?: string | null | undefined | undefined;
+  role?: string | null | undefined;
+}
+
+export interface extrasUser extends user {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
 export const buttonStyles =
   "hover:bg-light-background-secondary hover:border-primary dark:hover:bg-dark-background-secondary dark:hover:border-dark-primary cursor-pointer";
 
