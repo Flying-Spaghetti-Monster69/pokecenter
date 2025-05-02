@@ -68,21 +68,21 @@ const Dashboard = () => {
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <Clock className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden smm:inline">Waiting</span>
+          <span className="hidden smm:inline">Esperando</span>
         </TabsTrigger>
         <TabsTrigger
           value="in-room"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <Users className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden smm:inline">In-Room</span>
+          <span className="hidden smm:inline">En sala</span>
         </TabsTrigger>
         <TabsTrigger
           value="done"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <CheckCircle className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden smm:inline">Done</span>
+          <span className="hidden smm:inline">Curados</span>
         </TabsTrigger>
       </TabsList>
 
@@ -92,7 +92,7 @@ const Dashboard = () => {
         ) : (
           <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">
             {pokemons.map((pokemon) => (
-              <PokemonCard name={pokemon.name} key={pokemon.id} />
+              <PokemonCard {...pokemon} key={pokemon.id} />
             ))}
           </div>
         )}

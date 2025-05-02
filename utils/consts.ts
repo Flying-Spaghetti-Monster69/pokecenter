@@ -11,6 +11,21 @@ export interface user {
   role?: string | null | undefined;
 }
 
+export interface cita {
+  id: number;
+  current_PV: number;
+  PV: number;
+  statuses: string[];
+  level: number;
+  pokedex_ID: number;
+  species: string;
+  name: string;
+  created_At: string;
+  updated_At: string;
+  userId: string;
+  state_cita: string;
+}
+
 export interface extrasUser extends user {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
