@@ -11,7 +11,9 @@ const Navbar = () => {
         className="flex items-center cursor-pointer justify-center h-full w-fit space-x-2 "
       >
         <img src="/pokeball.svg" alt="Pokeball" className="h-full w-fit" />
-        <h1 className="text-black dark:text-white font-bold">Pokecenter</h1>
+        <h1 className="text-black dark:text-white font-bold hidden smm:inline">
+          Pokecenter
+        </h1>
       </Link>
       <div className="flex items-center justify-center h-full w-fit space-x-4">
         <UserProfileMenu />
