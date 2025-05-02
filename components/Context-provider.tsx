@@ -2,6 +2,10 @@
 
 import React from "react";
 
+export const userIdContext = React.createContext<string | null>(null);
+
+export const useUserIdContext = () => React.useContext(userIdContext);
+
 export default function ContextWrapper({
   children,
   value,
@@ -9,7 +13,6 @@ export default function ContextWrapper({
   children: React.ReactNode;
   value: string;
 }>) {
-  const userIdContext = React.createContext<string | null>(null);
   return (
     <userIdContext.Provider value={value}>{children}</userIdContext.Provider>
   );

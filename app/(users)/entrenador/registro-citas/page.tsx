@@ -15,15 +15,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "react-toastify";
-import { authClient } from "@/utils/auth-client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { registerPokemons } from "@/utils/actions";
+import { useUserIdContext } from "@/components/Context-provider";
 
 const inputStyles =
   "w-full h-[42px] p-2 border rounded-md hover:border-primary outline-0 focus:border-primary dark:hover:border-dark-primary dark:focus:border-dark-primary dark:bg-dark-background";
 
 const AppointmentsRegister = () => {
+  const userId = useUserIdContext();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof citaFormSchema>>({
     resolver: zodResolver(citaFormSchema),
@@ -48,26 +49,10 @@ const AppointmentsRegister = () => {
 
   const onSubmit = async (data: z.infer<typeof citaFormSchema>) => {
     setIsLoading(true);
-    const { data: session, error } = await authClient.getSession();
-    if (error) {
-      toast.error(
-        "Error al obtener la sesión del usuario, por favor vuelve a iniciar sesión"
-      );
-      setIsLoading(false);
 
-      return;
-    }
-    if (!session) {
-      toast.error(
-        "No se ha encontrado la sesión del usuario, por favor vuelve a iniciar sesión"
-      );
-      setIsLoading(false);
-      return;
-    }
-    const userId = session.user.id;
-    const citas = { ...data, userId: userId };
+    const citas = { ...data, userId: userId as string };
     try {
-      await registerPokemons(citas, userId);
+      await registerPokemons(citas, userId as string);
       toast.success("Cita registrada correctamente");
       setIsLoading(false);
       form.reset();
