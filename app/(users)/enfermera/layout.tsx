@@ -25,7 +25,7 @@ export default async function RootLayout({
   if (session.user.role !== "admin") {
     return (
       <ToastError
-        message="Por favor inicia sesión de enfermera para continuar."
+        message="Por favor inicia sesión de enfermera para entrar a esta pagina."
         route="/auth/login"
       />
     );
