@@ -13,30 +13,30 @@ const Dashboard = () => {
   return (
     <Tabs
       defaultValue="waiting"
-      className="w-full"
+      className="w-full mb-4"
       onValueChange={setActiveTab}
     >
-      <TabsList className="w-full flex flex-wrap mb-8">
+      <TabsList className="w-full flex flex-wrap mb-4">
         <TabsTrigger
           value="waiting"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <Clock className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden xs:inline">Waiting</span>
+          <span className="hidden smm:inline">Waiting</span>
         </TabsTrigger>
         <TabsTrigger
           value="in-room"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <Users className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden xs:inline">In-Room</span>
+          <span className="hidden smm:inline">In-Room</span>
         </TabsTrigger>
         <TabsTrigger
           value="done"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <CheckCircle className="h-4 w-4 flex-shrink-0" />
-          <span className="hidden xs:inline">Done</span>
+          <span className="hidden smm:inline">Done</span>
         </TabsTrigger>
       </TabsList>
 
