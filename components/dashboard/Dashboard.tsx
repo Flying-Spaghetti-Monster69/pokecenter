@@ -4,11 +4,57 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, Clock, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import PokemonCard from "../DragAndDrop/PokemonCard";
+import { useUserIdContext } from "../Context-provider";
+import { getUserWaitingPokemons } from "@/utils/actions";
+import { toast } from "react-toastify";
+
+interface cita {
+  id: number;
+  current_PV: number;
+  PV: number;
+  statuses: string[];
+  level: number;
+  pokedex_ID: number;
+  species: string;
+  name: string;
+  created_At: Date;
+  updated_At: Date;
+  userId: string;
+  state_cita: string;
+}
+
+async function fetchWaitingPokemons(userId: string) {
+  try {
+    const response = await getUserWaitingPokemons(userId);
+    return response;
+  } catch (error) {
+    toast.error("something went wrong, please try again later");
+    console.error("Error fetching waiting pokemons:", error);
+  }
+}
 
 const Dashboard = () => {
+  const userId = useUserIdContext();
   const [activeTab, setActiveTab] = useState("waiting");
+  const [isLoading, setIsLoading] = useState(false);
+  const [pokemons, setPokemons] = useState<cita[]>([]);
 
-  useEffect(() => {}, [activeTab]);
+  useEffect(() => {
+    if (activeTab === "waiting") {
+      setIsLoading(true);
+      fetchWaitingPokemons(userId as string)
+        .then((data) => {
+          if (data) {
+            setPokemons(data);
+            toast.success("Pokemons fetched successfully!");
+            console.log("Pokemons:", data);
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [activeTab, userId]);
 
   return (
     <Tabs
@@ -41,18 +87,15 @@ const Dashboard = () => {
       </TabsList>
 
       <TabsContent value={activeTab} className="space-y-2">
-        <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-          <PokemonCard name="Pikachu" />
-        </div>
+        {isLoading ? (
+          <p>loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">
+            {pokemons.map((pokemon) => (
+              <PokemonCard name={pokemon.name} key={pokemon.id} />
+            ))}
+          </div>
+        )}
       </TabsContent>
     </Tabs>
   );

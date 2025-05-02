@@ -22,3 +22,18 @@ export const registerPokemons = async (form: CitaForm, userId: string) => {
     console.error("Error processing request:", error);
   }
 };
+
+export const getUserWaitingPokemons = async (userId: string) => {
+  try {
+    const appointments = await prisma.cita.findMany({
+      where: {
+        userId: userId,
+        state_cita: "espera",
+      },
+    });
+
+    return appointments;
+  } catch (error) {
+    console.error("Error processing request:", error);
+  }
+};
