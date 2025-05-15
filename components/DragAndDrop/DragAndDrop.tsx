@@ -13,7 +13,7 @@ enum loading {
 }
 
 export function DragAndDrop() {
-  const [isLoading, setIsLoading] = useState(loading.fetchingPokemons);
+  const [isLoading, setIsLoading] = useState(loading.noLoading);
   const [waitList, waiting, setWaiting] = useDragAndDrop<
     HTMLUListElement,
     cita
@@ -54,6 +54,7 @@ export function DragAndDrop() {
   });
 
   const fetchPokemons = useCallback(async () => {
+    setIsLoading(loading.fetchingPokemons);
     const response = await getNotDonePokemons();
 
     if (!response) {
@@ -66,6 +67,7 @@ export function DragAndDrop() {
     setSala1(response.sala1);
     setSala2(response.sala2);
     setSala3(response.sala3);
+    setIsLoading(loading.noLoading);
   }, [setSala1, setSala2, setSala3, setWaiting]);
 
   useEffect(() => {
@@ -73,7 +75,6 @@ export function DragAndDrop() {
 
     if (!ignore) {
       fetchPokemons();
-      setIsLoading(loading.noLoading);
     }
 
     return () => {
@@ -163,7 +164,11 @@ export function DragAndDrop() {
           >
             Guardar cambios
           </Button>
-          <Button variant="outline" className="cursor-pointer ">
+          <Button
+            variant="outline"
+            className="cursor-pointer "
+            onClick={() => fetchPokemons()}
+          >
             Descartar cambios
           </Button>
         </div>
