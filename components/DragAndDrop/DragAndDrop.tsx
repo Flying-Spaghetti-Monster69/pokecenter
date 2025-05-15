@@ -3,13 +3,14 @@ import { useDragAndDrop } from "@formkit/drag-and-drop/react";
 import PokemonCard from "./PokemonCard";
 import { cita } from "@/utils/consts";
 import { useCallback, useEffect, useState } from "react";
-import { getNotDonePokemons } from "@/utils/actions";
+import { getNotDonePokemons, updateStateOfPokemons } from "@/utils/actions";
 import { Button } from "../ui/button";
 import LoadingBackdrop from "../LoadingBackdrop";
 
 enum loading {
   noLoading = "Terminado...",
   fetchingPokemons = "Cargando los pokemón...",
+  updatingPokemons = "Actualizando pokemón...",
 }
 
 export function DragAndDrop() {
@@ -81,6 +82,24 @@ export function DragAndDrop() {
       ignore = true;
     };
   }, [fetchPokemons]);
+
+  const handleUpdatingPokemons = async () => {
+    setIsLoading(loading.updatingPokemons);
+    const response = await updateStateOfPokemons({
+      waiting,
+      sala1,
+      sala2,
+      sala3,
+      cured,
+    });
+
+    if (!response) {
+      return;
+    }
+
+    console.log("Response:", response);
+    fetchPokemons();
+  };
 
   return (
     <>
@@ -161,6 +180,7 @@ export function DragAndDrop() {
           <Button
             variant="default"
             className="cursor-pointer mr-2 bg-secondary dark:bg-dark-secondary hover:bg-secondary/90 dark:hover:bg-dark-secondary/90"
+            onClick={() => handleUpdatingPokemons()}
           >
             Guardar cambios
           </Button>
