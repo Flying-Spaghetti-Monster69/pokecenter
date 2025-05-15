@@ -7,6 +7,7 @@ import PokemonCard from "../DragAndDrop/PokemonCard";
 import { useUserIdContext } from "../Context-provider";
 import { getUserWaitingPokemons } from "@/utils/actions";
 import { toast } from "react-toastify";
+import LoadingBackdrop from "../LoadingBackdrop";
 
 interface cita {
   id: number;
@@ -23,9 +24,9 @@ interface cita {
   state_cita: string;
 }
 
-async function fetchWaitingPokemons(userId: string) {
+async function fetchPokemons(userId: string, state: string) {
   try {
-    const response = await getUserWaitingPokemons(userId);
+    const response = await getUserWaitingPokemons(userId, state);
     return response;
   } catch (error) {
     toast.error("something went wrong, please try again later");
@@ -33,20 +34,35 @@ async function fetchWaitingPokemons(userId: string) {
   }
 }
 
+const getSalaPokemons = (pokemons: cita[], sala: string) => {
+  const pokemonsInSala = pokemons.filter((cita) => cita.state_cita === sala);
+  if (pokemonsInSala.length === 0) {
+    return <p className="text-center">no tienes pokemon en esta sala....</p>;
+  }
+
+  return (
+    <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">
+      {pokemonsInSala.map((pokemon) => (
+        <PokemonCard {...pokemon} key={pokemon.id} />
+      ))}
+    </div>
+  );
+};
+
 const Dashboard = () => {
   const userId = useUserIdContext();
-  const [activeTab, setActiveTab] = useState("waiting");
+  const [activeTab, setActiveTab] = useState("espera");
   const [isLoading, setIsLoading] = useState(false);
   const [pokemons, setPokemons] = useState<cita[]>([]);
 
   useEffect(() => {
-    if (activeTab === "waiting") {
+    let ignore = false;
+    if (!ignore) {
       setIsLoading(true);
-      fetchWaitingPokemons(userId as string)
+      fetchPokemons(userId as string, activeTab)
         .then((data) => {
           if (data) {
             setPokemons(data);
-            toast.success("Pokemons fetched successfully!");
             console.log("Pokemons:", data);
           }
         })
@@ -54,31 +70,34 @@ const Dashboard = () => {
           setIsLoading(false);
         });
     }
+    return () => {
+      ignore = true;
+    };
   }, [activeTab, userId]);
 
   return (
     <Tabs
-      defaultValue="waiting"
+      defaultValue="espera"
       className="w-full mb-4"
       onValueChange={setActiveTab}
     >
       <TabsList className="w-full flex flex-wrap mb-4">
         <TabsTrigger
-          value="waiting"
+          value="espera"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <Clock className="h-4 w-4 flex-shrink-0" />
           <span className="hidden smm:inline">Esperando</span>
         </TabsTrigger>
         <TabsTrigger
-          value="in-room"
+          value="sala"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <Users className="h-4 w-4 flex-shrink-0" />
           <span className="hidden smm:inline">En sala</span>
         </TabsTrigger>
         <TabsTrigger
-          value="done"
+          value="curado"
           className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3"
         >
           <CheckCircle className="h-4 w-4 flex-shrink-0" />
@@ -88,7 +107,19 @@ const Dashboard = () => {
 
       <TabsContent value={activeTab} className="space-y-2">
         {isLoading ? (
-          <p>loading...</p>
+          <LoadingBackdrop
+            text="Cargando..."
+            styles="w-full h-min-fit h-full relative py-6"
+          />
+        ) : activeTab === "sala" ? (
+          <>
+            <h1 className="text-2xl font-semibold text-center">Sala 1</h1>
+            {getSalaPokemons(pokemons, "sala1")}
+            <h1 className="text-2xl font-semibold text-center">Sala 2</h1>
+            {getSalaPokemons(pokemons, "sala2")}
+            <h1 className="text-2xl font-semibold text-center">Sala 3</h1>
+            {getSalaPokemons(pokemons, "sala3")}
+          </>
         ) : (
           <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">
             {pokemons.map((pokemon) => (

@@ -24,16 +24,29 @@ export const registerPokemons = async (form: CitaForm, userId: string) => {
   }
 };
 
-export const getUserWaitingPokemons = async (userId: string) => {
+export const getUserWaitingPokemons = async (userId: string, state: string) => {
   try {
-    const appointments = await prisma.cita.findMany({
-      where: {
-        userId: userId,
-        state_cita: "espera",
-      },
-    });
+    if (state === "sala") {
+      const appointments = await prisma.cita.findMany({
+        where: {
+          userId: userId,
+          state_cita: {
+            in: ["sala1", "sala2", "sala3"],
+          },
+        },
+      });
 
-    return appointments;
+      return appointments;
+    } else {
+      const appointments = await prisma.cita.findMany({
+        where: {
+          userId: userId,
+          state_cita: state,
+        },
+      });
+
+      return appointments;
+    }
   } catch (error) {
     console.error("Error processing request:", error);
   }
