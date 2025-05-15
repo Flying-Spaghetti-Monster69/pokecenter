@@ -28,7 +28,13 @@ const PokemonCard = ({
             {name} ({species})
           </p>
           <div className="">
-            <p className="text-xs text-red-600">
+            <p
+              className={`text-xs ${
+                current_PV <= Math.floor(PV / 2)
+                  ? "text-red-500"
+                  : "text-green-500"
+              }`}
+            >
               PV: {current_PV}/{PV}
             </p>
             <p className="text-xs text-text-secondary dark:text-dark-text-secondary">
@@ -43,11 +49,13 @@ const PokemonCard = ({
           height={96}
         />
       </div>
-      <div className="w-full border-t-2 border-primary dark:border-dark-primary" />
-      <div className="flex items-center justify-between px-2 ">
-        <div className="flex w-full h-fit items-center space-x-1 py-2">
+      <div className="w-full border-t-2  border-primary dark:border-dark-primary" />
+      <div className="flex items-center justify-between px-2 py-2">
+        <div className="flex w-full h-fit items-center space-x-1 ">
           {statuses.length === 0 ? (
-            <p className="h-5 w-full font-semibold text-sm">Sin efectos...</p>
+            <p className="h-5 w-fit font-semibold text-sm px-2 bg-green-500 rounded-sm">
+              Sin efectos... ✓
+            </p>
           ) : (
             statuses.map((status) => {
               return (
