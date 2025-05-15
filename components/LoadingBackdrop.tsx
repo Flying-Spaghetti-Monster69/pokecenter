@@ -9,7 +9,7 @@ const LoadingBackdrop = ({
 }) => {
   return (
     <div
-      className={`fixed inset-0 backdrop-blur-xs z-50 gap-2 flex flex-col items-center justify-center ${styles}`}
+      className={`fixed inset-0 backdrop-blur-sm z-50 gap-2 flex flex-col items-center justify-center ${styles}`}
     >
       <Image
         src={"/pikachu_test.png"}
@@ -24,9 +24,11 @@ const LoadingBackdrop = ({
           height={40}
           width={40}
           alt="pokeball"
-          className="h-10 w-10 animate-spin text-primary dark:text-dark-primary"
+          className="h-10 w-10 animate-spin text-primary dark:text-dark-primary "
         />
-        <span className="text-xs font-bold">{text}</span>
+        <span className="text-xs font-bold p-2 bg-light-background dark:bg-dark-background rounded-md">
+          {text}
+        </span>
       </div>
     </div>
   );
