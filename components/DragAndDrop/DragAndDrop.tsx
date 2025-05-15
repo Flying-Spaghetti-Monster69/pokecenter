@@ -2,11 +2,18 @@
 import { useDragAndDrop } from "@formkit/drag-and-drop/react";
 import PokemonCard from "./PokemonCard";
 import { cita } from "@/utils/consts";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getNotDonePokemons } from "@/utils/actions";
-import Changes from "./Changes";
+import { Button } from "../ui/button";
+import LoadingBackdrop from "../LoadingBackdrop";
+
+enum loading {
+  noLoading = "Terminado...",
+  fetchingPokemons = "Cargando los pokemón...",
+}
 
 export function DragAndDrop() {
+  const [isLoading, setIsLoading] = useState(loading.fetchingPokemons);
   const [waitList, waiting, setWaiting] = useDragAndDrop<
     HTMLUListElement,
     cita
@@ -19,7 +26,7 @@ export function DragAndDrop() {
     {
       group: "waitList",
       accepts: (): boolean => {
-        return sala1.length < 4;
+        return sala1.length < 5;
       },
     }
   );
@@ -46,27 +53,42 @@ export function DragAndDrop() {
     group: "waitList",
   });
 
-  useEffect(() => {
-    async function fetchPokemons() {
-      const response = await getNotDonePokemons();
+  const fetchPokemons = useCallback(async () => {
+    const response = await getNotDonePokemons();
 
-      if (!response) {
-        return;
-      }
-
-      console.log("Pokemons:", response);
-
-      setWaiting(response.waiting);
-      setSala1(response.sala1);
-      setSala2(response.sala2);
-      setSala3(response.sala3);
+    if (!response) {
+      return;
     }
 
-    fetchPokemons();
-  }, [setWaiting, setSala1, setSala2, setSala3]);
+    console.log("Pokemons:", response);
+
+    setWaiting(response.waiting);
+    setSala1(response.sala1);
+    setSala2(response.sala2);
+    setSala3(response.sala3);
+  }, [setSala1, setSala2, setSala3, setWaiting]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    if (!ignore) {
+      fetchPokemons();
+      setIsLoading(loading.noLoading);
+    }
+
+    return () => {
+      ignore = true;
+    };
+  }, [fetchPokemons]);
 
   return (
     <>
+      {isLoading !== loading.noLoading && (
+        <LoadingBackdrop
+          text={isLoading}
+          styles="w-full h-[calc(100vh-64px)] mt-[64px]"
+        />
+      )}
       <div className="flex items-start justify-start space-x-6 mt-4 px-8">
         <div className="top-0 flex flex-col items-center justify-center shadow-lg dark:shadow-dark-secondary border-dark-secondary border-2 rounded-2xl p-4 h-auto min-h-60 min-w-80 bg-light-background-subtle dark:bg-dark-background-subtle">
           <h1 className="text-center text-xl font-bold">Espera</h1>
@@ -82,7 +104,7 @@ export function DragAndDrop() {
         <div className="flex flex-col items-center justify-center shadow-lg dark:shadow-dark-primary border-primary dark:border-dark-primary border-2 rounded-2xl p-4 h-auto min-h-60 min-w-80 bg-[#F3FFFF] dark:bg-[#121212]">
           <h1 className="text-center text-xl font-bold ">Sala 1</h1>
           <h4 className="text-center text-secondary dark:text-dark-secondary text-xl font-semibold ">
-            ({sala1.length}/4)
+            ({sala1.length}/5)
           </h4>
           <ul
             ref={sala1List}
@@ -133,7 +155,19 @@ export function DragAndDrop() {
           </ul>
         </div>
       </div>
-      <Changes />
+      <div className="fixed bottom-4 w-full flex flex-row gap-2 justify-center items-center">
+        <div className="bg-light-background-subtle dark:bg-dark-background-subtle p-2 rounded-xl border border-primary dark:border-dark-primary">
+          <Button
+            variant="default"
+            className="cursor-pointer mr-2 bg-secondary dark:bg-dark-secondary hover:bg-secondary/90 dark:hover:bg-dark-secondary/90"
+          >
+            Guardar cambios
+          </Button>
+          <Button variant="outline" className="cursor-pointer ">
+            Descartar cambios
+          </Button>
+        </div>
+      </div>
     </>
   );
 }
