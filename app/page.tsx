@@ -1,3 +1,4 @@
+import MovingPokeBackground from "@/components/landing/MovingPokeBackground";
 import { ThemeToggle } from "@/components/navbar/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { buttonStyles } from "@/utils/consts";
@@ -6,7 +7,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-2 bg-[url('/pokemonballs1.png')] animate-[pan_30s_linear_infinite] sm:animate-[pan_180s_linear_infinite] bg-fixed bg-size-[20%] sm:bg-size-[15%] lg:bg-size-[10%]">
+    <MovingPokeBackground>
       <ThemeToggle classNames="absolute top-4 right-4" />
 
       <main className="flex flex-col sm:flex-row gap-2 items-center justify-between w-full max-w-5xl text-center rounded-3xl py-2 px-6 m-2 bg-light-background-subtle dark:bg-dark-background-subtle">
@@ -47,6 +48,6 @@ export default function Home() {
           className="h-[137px] w-[150px] sm:h-[275px] sm:w-[300px] animate-[jumping_3s_infinite]"
         />
       </main>
-    </div>
+    </MovingPokeBackground>
   );
 }
