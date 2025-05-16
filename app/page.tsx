@@ -10,7 +10,7 @@ export default function Home() {
     <MovingPokeBackground>
       <ThemeToggle classNames="absolute top-4 right-4" />
 
-      <main className="flex flex-col sm:flex-row gap-2 items-center justify-between w-full max-w-5xl text-center rounded-3xl py-2 px-6 m-2 bg-light-background-subtle dark:bg-dark-background-subtle">
+      <main className="flex flex-col sm:flex-row gap-2 items-center justify-between w-full max-w-5xl text-center rounded-3xl p-6 m-2 bg-light-background-subtle dark:bg-dark-background-subtle">
         <div>
           <h1 className="font-bold text-2xl sm:text-3xl">
             🏥 Centro Pokémon – Cuidado Rápido y Eficiente para tus Compañeros
