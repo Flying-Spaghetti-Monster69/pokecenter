@@ -82,10 +82,30 @@ export const getNotDonePokemons = async () => {
   }
 };
 
-const getPrismaUpdatePromiseCita = async (ids: number[], state: string) => {
+const getPrismaUpdatePromiseCita = async (
+  ids: number[] | { id: number; PV: number }[],
+  state: string
+) => {
+  if (state === "curado") {
+    const idsArray = ids as { id: number; PV: number }[];
+    return Promise.all(
+      idsArray.map((pokemon) =>
+        prisma.cita.update({
+          where: {
+            id: pokemon.id,
+          },
+          data: {
+            current_PV: pokemon.PV,
+            statuses: [],
+            state_cita: state,
+          },
+        })
+      )
+    );
+  }
   return prisma.cita.updateMany({
     where: {
-      id: { in: ids },
+      id: { in: ids as number[] },
     },
     data: {
       state_cita: state,
@@ -101,7 +121,8 @@ export const updateStateOfPokemons = async (pokemons: {
   cured: cita[];
 }) => {
   try {
-    const idsAndLabels: [number[], string][] = [];
+    const idsAndLabels: [number[] | { id: number; PV: number }[], string][] =
+      [];
     await prisma.cita.updateMany({
       where: {
         NOT: [{ state_cita: "curado" }, { state_cita: "espera" }],
@@ -120,9 +141,15 @@ export const updateStateOfPokemons = async (pokemons: {
       }
       if (key === "cured") {
         key = "curado";
+        idsAndLabels.push([
+          value.map((cita) => {
+            return { id: cita.id, PV: cita.PV };
+          }),
+          key,
+        ]);
+      } else {
+        idsAndLabels.push([value.map((cita) => cita.id), key]);
       }
-
-      idsAndLabels.push([value.map((cita) => cita.id), key]);
     }
 
     const result = await Promise.all(
