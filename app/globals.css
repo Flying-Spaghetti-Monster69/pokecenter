@@ -164,3 +164,39 @@
     @apply bg-background text-foreground;
   }
 }
+@keyframes pan {
+  0% {
+    background-position: 0% 100%;
+  }
+  25% {
+    background-position: 25% 75%;
+  }
+  50% {
+    background-position: 50% 50%;
+  }
+  50% {
+    background-position: 75% 25%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+/* @keyframes pan {
+  0% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+} */
+
+@keyframes jumping {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-25px);
+  }
+}
