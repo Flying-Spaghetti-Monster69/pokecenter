@@ -187,14 +187,21 @@ export const getUsersByPage = async (page: number) => {
 
 export const makeAdmin = async (userId: string) => {
   try {
-    const user = await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        role: "admin",
-      },
-    });
+    const user = Promise.all([
+      prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          role: "admin",
+        },
+      }),
+      prisma.cita.deleteMany({
+        where: {
+          userId: userId,
+        },
+      }),
+    ]);
 
     return user;
   } catch (error) {
