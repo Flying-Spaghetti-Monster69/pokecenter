@@ -3,7 +3,11 @@ import LoadingBackdrop from "@/components/LoadingBackdrop";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Suspense } from "react";
 
-const page = async ({ params }: { params: { page: string } }) => {
+interface params {
+  params: Promise<{ page: string }>;
+}
+
+const page = async ({ params }: params) => {
   const { page } = await params;
 
   return (
