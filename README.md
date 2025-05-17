@@ -86,3 +86,5 @@ pokecenter/
 1. Create a feature branch
 2. Make your changes
 3. Submit a pull request
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Flying-Spaghetti-Monster69/pokecenter)
