@@ -1,4 +1,4 @@
-# Pokemon Center Management System 🏥 
+# Pokemon Center Management System 🏥
 
 A Next.js application for managing Pokemon healing appointments and treatment rooms. The system allows trainers to register their Pokemon for treatment and tracks their healing progress through different treatment rooms.
 
@@ -27,7 +27,7 @@ This is a project for the Web Development course at the National University of C
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Flying-Spaghetti-Monster69/pokecenter
 cd pokecenter
 ```
 
