@@ -1,9 +1,8 @@
+"use server";
+
+import { redirect } from "next/navigation";
 const page = () => {
-  return (
-    <main className="mt-16">
-      <h1>admin page</h1>
-    </main>
-  );
+  return redirect("/enfermera/admin/1");
 };
 
 export default page;

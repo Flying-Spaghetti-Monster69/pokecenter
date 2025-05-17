@@ -163,3 +163,41 @@ export const updateStateOfPokemons = async (pokemons: {
     console.error(error);
   }
 };
+
+export const getUsersByPage = async (page: number) => {
+  try {
+    const users = await prisma.user.findMany({
+      where: {
+        role: "user",
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+      skip: (page - 1) * 10,
+      take: 10,
+    });
+
+    return users;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const makeAdmin = async (userId: string) => {
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role: "admin",
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.error(error);
+  }
+};
