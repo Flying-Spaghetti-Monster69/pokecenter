@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokemon Center Management System
 
-## Getting Started
+A Next.js application for managing Pokemon healing appointments and treatment rooms. The system allows trainers to register their Pokemon for treatment and tracks their healing progress through different treatment rooms.
 
-First, run the development server:
+This is a project for the Web Development course at the National University of Colombia.
+
+## Features
+
+- User authentication for Pokemon trainers
+- Pokemon registration system
+- Real-time treatment room management
+- Drag and drop interface for Pokemon management
+- Automatic health restoration tracking
+- Dark/Light theme support
+
+## Tech Stack
+
+- **Framework:** Next.js 15
+- **Database:** PostgreSQL with Prisma ORM
+- **Authentication:** BetterAuth
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Drag and Drop:** @formkit/drag-and-drop
+
+## Local Development Setup
+
+1. Clone the repository:
+
+```bash
+git clone <your-repo-url>
+cd pokecenter
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up your environment variables:
+
+```bash
+cp .env.example .env
+```
+
+4. Configure your `.env` file with:
+
+```
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=http://localhost:3000
+```
+
+5. Run database migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+6. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+7. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+pokecenter/
+├── app/              # Next.js app router pages
+├── components/       # Reusable UI components
+├── prisma/          # Database schema and migrations
+├── public/          # Static assets
+└── utils/           # Helper functions and constants
+```
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Create a feature branch
+2. Make your changes
+3. Submit a pull request
