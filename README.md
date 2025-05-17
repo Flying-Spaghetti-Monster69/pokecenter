@@ -1,4 +1,4 @@
-# Pokemon Center Management System
+# Pokemon Center Management System 🏥 
 
 A Next.js application for managing Pokemon healing appointments and treatment rooms. The system allows trainers to register their Pokemon for treatment and tracks their healing progress through different treatment rooms.
 
