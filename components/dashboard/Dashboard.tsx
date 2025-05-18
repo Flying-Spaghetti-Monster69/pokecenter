@@ -2,37 +2,12 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, Clock, Users } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PokemonCard from "../DragAndDrop/PokemonCard";
 import { useUserIdContext } from "../Context-provider";
-import { getUserWaitingPokemons } from "@/utils/actions";
-import { toast } from "react-toastify";
 import LoadingBackdrop from "../LoadingBackdrop";
-
-interface cita {
-  id: number;
-  current_PV: number;
-  PV: number;
-  statuses: string[];
-  level: number;
-  pokedex_ID: number;
-  species: string;
-  name: string;
-  created_At: Date;
-  updated_At: Date;
-  userId: string;
-  state_cita: string;
-}
-
-async function fetchPokemons(userId: string, state: string) {
-  try {
-    const response = await getUserWaitingPokemons(userId, state);
-    return response;
-  } catch (error) {
-    toast.error("something went wrong, please try again later");
-    console.error("Error fetching waiting pokemons:", error);
-  }
-}
+import { useGetPokemonByTab } from "@/utils/hooks";
+import { cita } from "@/utils/consts";
 
 const getSalaPokemons = (pokemons: cita[], sala: string) => {
   const pokemonsInSala = pokemons.filter((cita) => cita.state_cita === sala);
@@ -50,30 +25,9 @@ const getSalaPokemons = (pokemons: cita[], sala: string) => {
 };
 
 const Dashboard = () => {
-  const userId = useUserIdContext();
+  const userId = useUserIdContext() as string;
   const [activeTab, setActiveTab] = useState("espera");
-  const [isLoading, setIsLoading] = useState(false);
-  const [pokemons, setPokemons] = useState<cita[]>([]);
-
-  useEffect(() => {
-    let ignore = false;
-    if (!ignore) {
-      setIsLoading(true);
-      fetchPokemons(userId as string, activeTab)
-        .then((data) => {
-          if (data) {
-            setPokemons(data);
-            console.log("Pokemons:", data);
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-    return () => {
-      ignore = true;
-    };
-  }, [activeTab, userId]);
+  const { isLoading, pokemons } = useGetPokemonByTab({ userId, activeTab });
 
   return (
     <Tabs
