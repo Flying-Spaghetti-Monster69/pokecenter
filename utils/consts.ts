@@ -50,5 +50,5 @@ export const enfermeraRoutes: Route[] = [
     name: "Flujo de Citas",
     route: "/enfermera/citas",
   },
-  { name: "Admin", route: "/enfermera/admin" },
+  { name: "Admin", route: "/enfermera/admin/1" },
 ];

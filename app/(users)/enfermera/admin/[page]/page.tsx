@@ -13,7 +13,9 @@ const page = async ({ params }: params) => {
 
   return (
     <main className="mt-16 lg:px-16">
-      <h1 className="text-3xl mb-4 pt-8 font-semibold">Usuarios</h1>
+      <h1 className="text-3xl mb-4 pt-8 px-4 lg:px-0 font-semibold">
+        Usuarios
+      </h1>
       <Suspense
         fallback={
           <LoadingBackdrop
