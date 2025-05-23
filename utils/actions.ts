@@ -185,6 +185,22 @@ export const getUsersByPage = async (page: number) => {
   }
 };
 
+export const getNumberOfPagesInAdmin = async () => {
+  try {
+    const userCount = await prisma.user.count({
+      where: {
+        role: "user",
+      },
+    });
+
+    const pages = Math.floor((userCount - 1) / 10) + 1;
+
+    return pages;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const makeAdmin = async (userId: string) => {
   try {
     const user = Promise.all([
