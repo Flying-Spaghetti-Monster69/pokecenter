@@ -4,8 +4,8 @@ import PokemonCard from "./PokemonCard";
 import { cita } from "@/utils/consts";
 import { useCallback, useEffect, useState } from "react";
 import { getNotDonePokemons, updateStateOfPokemons } from "@/utils/actions";
-import { Button } from "../ui/button";
 import LoadingBackdrop from "../LoadingBackdrop";
+import ChangesPopUp from "./ChangesPopUp";
 
 enum loading {
   noLoading = "Terminado...",
@@ -114,7 +114,7 @@ export function DragAndDrop() {
         />
       )}
       <div className="flex items-start justify-start space-x-6 mt-4 px-8">
-        <div className="top-0 flex flex-col items-center justify-center shadow-lg dark:shadow-dark-secondary border-dark-secondary border-2 rounded-2xl p-4 h-auto min-h-60 min-w-80 bg-light-background-subtle dark:bg-dark-background-subtle">
+        <div className="flex flex-col items-center justify-center shadow-lg dark:shadow-dark-secondary border-dark-secondary border-2 rounded-2xl p-4 h-auto min-h-60 min-w-80 bg-light-background-subtle dark:bg-dark-background-subtle">
           <h1 className="text-center text-xl font-bold">Espera</h1>
           <ul
             ref={waitList}
@@ -179,24 +179,10 @@ export function DragAndDrop() {
           </ul>
         </div>
       </div>
-      <div className="fixed bottom-4 w-full flex flex-row gap-2 justify-center items-center">
-        <div className="bg-light-background-subtle dark:bg-dark-background-subtle p-2 rounded-xl border border-primary dark:border-dark-primary">
-          <Button
-            variant="default"
-            className="cursor-pointer mr-2 bg-secondary dark:bg-dark-secondary hover:bg-secondary/90 dark:hover:bg-dark-secondary/90"
-            onClick={() => handleUpdatingPokemons()}
-          >
-            Guardar cambios
-          </Button>
-          <Button
-            variant="outline"
-            className="cursor-pointer "
-            onClick={() => fetchPokemons()}
-          >
-            Descartar cambios
-          </Button>
-        </div>
-      </div>
+      <ChangesPopUp
+        refreshFunction={fetchPokemons}
+        updateFunction={handleUpdatingPokemons}
+      />
     </>
   );
 }
