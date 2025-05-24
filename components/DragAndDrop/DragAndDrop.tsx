@@ -50,9 +50,12 @@ export function DragAndDrop() {
       },
     }
   );
-  const [curedList, cured] = useDragAndDrop<HTMLUListElement, cita>([], {
-    group: "waitList",
-  });
+  const [curedList, cured, setCured] = useDragAndDrop<HTMLUListElement, cita>(
+    [],
+    {
+      group: "waitList",
+    }
+  );
 
   const fetchPokemons = useCallback(async () => {
     setIsLoading(loading.fetchingPokemons);
@@ -68,8 +71,9 @@ export function DragAndDrop() {
     setSala1(response.sala1);
     setSala2(response.sala2);
     setSala3(response.sala3);
+    setCured([]);
     setIsLoading(loading.noLoading);
-  }, [setSala1, setSala2, setSala3, setWaiting]);
+  }, [setSala1, setSala2, setSala3, setWaiting, setCured]);
 
   useEffect(() => {
     let ignore = false;
