@@ -195,7 +195,7 @@ export const getNumberOfPagesInAdmin = async () => {
 
     const pages = Math.floor((userCount - 1) / 10) + 1;
 
-    return pages;
+    return { count: userCount, pages };
   } catch (error) {
     console.error(error);
   }

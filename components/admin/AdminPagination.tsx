@@ -71,32 +71,37 @@ const NearbyPages = (page: number, pages: number) => {
 };
 
 const AdminPagination = async ({ page }: { page: number }) => {
-  const pages = await getNumberOfPagesInAdmin();
+  const response = await getNumberOfPagesInAdmin();
+
+  if (!response) {
+    return <h1>hubo un error, intenta de nuevo</h1>;
+  }
+
+  const { pages, count } = response;
 
   if (pages === 0) {
     return <h1>No tenemos usuarios! :C</h1>;
   }
 
-  if (!pages) {
-    return <h1>hubo un error</h1>;
-  }
-
   return (
-    <Pagination className="mt-2">
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious
-            href={page - 1 > 0 ? `/enfermera/admin/${page - 1}` : "#"}
-          />
-        </PaginationItem>
-        {NearbyPages(page, pages)}
-        <PaginationItem>
-          <PaginationNext
-            href={page + 1 <= pages ? `/enfermera/admin/${page + 1}` : "#"}
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    <>
+      <p className="font-semibold text-right p-2">Total: {count}</p>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href={page - 1 > 0 ? `/enfermera/admin/${page - 1}` : "#"}
+            />
+          </PaginationItem>
+          {NearbyPages(page, pages)}
+          <PaginationItem>
+            <PaginationNext
+              href={page + 1 <= pages ? `/enfermera/admin/${page + 1}` : "#"}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </>
   );
 };
 
