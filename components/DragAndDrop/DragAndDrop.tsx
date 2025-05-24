@@ -65,8 +65,6 @@ export function DragAndDrop() {
       return;
     }
 
-    console.log("Pokemons:", response);
-
     setWaiting(response.waiting);
     setSala1(response.sala1);
     setSala2(response.sala2);
@@ -101,7 +99,6 @@ export function DragAndDrop() {
       return;
     }
 
-    console.log("Response:", response);
     fetchPokemons();
   };
 
