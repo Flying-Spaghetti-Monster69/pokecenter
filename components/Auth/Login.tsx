@@ -134,10 +134,10 @@ const Login = () => {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Log in
+            Inicia Sesión
           </CardTitle>
           <CardDescription className="text-center">
-            Escoge tu metodo de login preferido
+            Escoge tu metodo de inicio de sesión preferido
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

@@ -155,7 +155,7 @@ const SignIn = () => {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Sign in
+            Regístrate
           </CardTitle>
           <CardDescription className="text-center">
             Escoge tu metodo de registro preferido
@@ -232,7 +232,7 @@ const SignIn = () => {
               href="/auth/login"
               className="text-accent underline underline-offset-4 hover:text-accent/90 dark:text-dark-primary dark:hover:text-dark-primary/90"
             >
-              Log in
+              Inicia Sesión
             </Link>
           </p>
         </CardFooter>
