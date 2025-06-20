@@ -74,11 +74,7 @@ cd pokecenter
 npm install
 ```
 
-**3.** Set up your environment variables:
-
-```bash
-cp .env.example .env
-```
+**3.** Create a `.env` file at the root of the project
 
 **4.** Configure your `.env` file with:
 
