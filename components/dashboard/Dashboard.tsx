@@ -74,12 +74,21 @@ const Dashboard = () => {
             <h1 className="text-2xl font-semibold text-center">Sala 3</h1>
             {getSalaPokemons(pokemons, "sala3")}
           </>
-        ) : (
-          <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">
-            {pokemons.map((pokemon) => (
-              <PokemonCard {...pokemon} key={pokemon.id} />
-            ))}
-          </div>
+        ) : activeTab === "espera" && pokemons.length === 0 ? (  
+        <div className="text-center py-8">  
+          <p className="text-lg text-muted-foreground">  
+           No tienes Pokémon esperando por sanación aún.  
+           </p>  
+           <p className="text-sm text-muted-foreground mt-2">  
+           Registra tus Pokémon para comenzar el proceso de curación.  
+          </p>  
+          </div>  
+        ) : (  
+          <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">  
+            {pokemons.map((pokemon) => (  
+            <PokemonCard {...pokemon} key={pokemon.id} />  
+          ))}  
+           </div>  
         )}
       </TabsContent>
     </Tabs>
