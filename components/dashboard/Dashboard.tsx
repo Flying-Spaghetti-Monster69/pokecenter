@@ -12,7 +12,7 @@ import { cita } from "@/utils/consts";
 const getSalaPokemons = (pokemons: cita[], sala: string) => {
   const pokemonsInSala = pokemons.filter((cita) => cita.state_cita === sala);
   if (pokemonsInSala.length === 0) {
-    return <p className="text-center">no tienes pokemon en esta sala....</p>;
+    return <p className="text-center">No tienes pokemon en esta sala....</p>;
   }
 
   return (
@@ -83,7 +83,16 @@ const Dashboard = () => {
            Registra tus Pokémon para comenzar el proceso de curación.  
           </p>  
           </div>  
-        ) : (  
+        ) :  activeTab === "curado" && pokemons.length === 0 ? (  
+    <div className="text-center py-8">  
+      <p className="text-lg text-muted-foreground">  
+        No tienes Pokémon curados aún.  
+      </p>  
+      <p className="text-sm text-muted-foreground mt-2">  
+        Tus Pokémon aparecerán aquí una vez que hayan sido sanados.  
+      </p>  
+    </div>  
+        ) :(  
           <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">  
             {pokemons.map((pokemon) => (  
             <PokemonCard {...pokemon} key={pokemon.id} />  
