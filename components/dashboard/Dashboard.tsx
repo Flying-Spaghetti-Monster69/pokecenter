@@ -7,12 +7,14 @@ import PokemonCard from "../DragAndDrop/PokemonCard";
 import { useUserIdContext } from "../Context-provider";
 import LoadingBackdrop from "../LoadingBackdrop";
 import { useGetPokemonByTab } from "@/utils/hooks";
-import { cita } from "@/utils/consts";
+import { buttonStyles, cita } from "@/utils/consts";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 const getSalaPokemons = (pokemons: cita[], sala: string) => {
   const pokemonsInSala = pokemons.filter((cita) => cita.state_cita === sala);
   if (pokemonsInSala.length === 0) {
-    return <p className="text-center">no tienes pokemon en esta sala....</p>;
+    return <p className="text-center">No tienes pokemon en esta sala....</p>;
   }
 
   return (
@@ -74,6 +76,26 @@ const Dashboard = () => {
             <h1 className="text-2xl font-semibold text-center">Sala 3</h1>
             {getSalaPokemons(pokemons, "sala3")}
           </>
+        ) : pokemons.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-lg font-semibold">
+              No tienes Pokémon esperando en la sección de {activeTab} aún.
+            </p>
+            {activeTab === "espera" && (
+              <>
+                <p className="text-sm mt-2 mb-4">
+                  Registra tus Pokémon para comenzar el proceso de curación.
+                </p>
+                <Link href={"/entrenador/registro-citas"}>
+                  <Button
+                    className={`bg-primary dark:bg-dark-primary text-accent-foreground ${buttonStyles}`}
+                  >
+                    Ir a registrar
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
         ) : (
           <div className="grid grid-cols-1 smg:grid-cols-2 mdg:grid-cols-3 lgg:grid-cols-4 gap-4">
             {pokemons.map((pokemon) => (
